@@ -1,0 +1,39 @@
+stages:
+- check-files
+- lint
+- test-lab
+- run-lab
+
+check-lab1-files:
+  tags: 
+    - ics0013-2019
+  stage: check-files
+  script:
+    - test -f .gitignore
+    - test -f lab1.rb
+    - test -f lab1_classes.rb
+    - test -f test_lab1.rb
+    - find . -name "*" -not -path "./.git/*" -not -path "./builds/*" 2>&1
+
+lint-lab1:
+  tags: 
+    - ics0013-2019
+  stage: lint
+  script:
+    - rubocop lab1.rb
+    - rubocop lab1_classes.rb
+    - rubocop test_lab1.rb
+
+test-lab1:
+  tags: 
+    - ics0013-2019
+  stage: test-lab
+  script:
+    - ruby test_lab1.rb
+
+run-lab1:
+  tags: 
+    - ics0013-2019
+  stage: run-lab
+  script:
+    - ruby lab1.rb
